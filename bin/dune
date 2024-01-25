@@ -1,0 +1,4 @@
+(executable
+ (public_name ErrorHandling)
+ (name main)
+ (libraries ErrorHandling))
