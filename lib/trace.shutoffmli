@@ -1,6 +1,10 @@
 type ('a, 'e, 'w) t
 
+type error = Trace_intf.error
+
 val pure : 'a -> ('a, 'e, 'w) t
+
+val serlalizer : error -> [> error ]
 
 val throw : ?serializer:('e -> 'w) -> 'e -> (unit, 'e, 'w) t
 

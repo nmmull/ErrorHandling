@@ -1,11 +1,12 @@
 type ('a, 'e, 'w) t = ('a, 'e) result * 'w list
 
+type error = Trace_intf.error
+
 let pure a = (Ok a, [])
 
-let throw ?serializer e =
-  match serializer with
-  | None -> (Error e, [])
-  | Some f -> (Error e, [f e])
+let serializer e = (e : error :> [> error])
+
+let throw e = (Error e, [serializer e])
 
 let bind (r, l) f =
   match r with
@@ -17,5 +18,5 @@ let catch (r, l) f =
   | Ok v -> (Ok v, l)
   | Error e -> let (r', l') = f e in (r', l' @ l)
 
-let withError ?serializer e x =
-  catch x (fun _ -> throw ?serializer:serializer e)
+let withError e x =
+  catch x (fun _ -> throw e)
