@@ -1,5 +1,3 @@
-type ('a, 'e, 'w) t = ('a, 'e, 'w) Trace_intf.t
-
 type error = Trace_intf.error
 
 type ('a, 'b, 'c) full_error = ('a, 'b, 'c) Trace_intf.full_error
