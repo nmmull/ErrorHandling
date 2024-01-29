@@ -1,10 +1,12 @@
-type ('a, 'e, 'w) t = ('a, 'e) result * 'w list
+type ('a, 'e, 'w) t = ('a, 'e, 'w) Trace_intf.t
 
 type error = Trace_intf.error
 
-let pure a = (Ok a, [])
+type ('a, 'b, 'c) full_error = ('a, 'b, 'c) Trace_intf.full_error
 
 let serializer e = (e : error :> [> error])
+
+let pure a = (Ok a, [])
 
 let throw e = (Error e, [serializer e])
 
