@@ -1,22 +1,16 @@
-type error = Trace_intf.error
+type error = [
+  | Bar_intf.error
+  | Foo_intf.error
+  ]
 
-type ('a, 'b, 'c) full_error = ('a, 'b, 'c) Trace_intf.full_error
+let coerce e = (e : error :> [> error])
 
-let serializer e = (e : error :> [> error])
+let pure x = Ok x
 
-let pure a = (Ok a, [])
+let mk_error e =
+  Error [coerce e]
 
-let throw e = (Error e, [serializer e])
-
-let bind (r, l) f =
-  match r with
-  | Ok v -> let (r', l') = f v in (r', l' @ l)
-  | Error e -> (Error e, l)
-
-let catch (r, l) f =
-  match r with
-  | Ok v -> (Ok v, l)
-  | Error e -> let (r', l') = f e in (r', l' @ l)
-
-let withError e x =
-  catch x (fun _ -> throw e)
+let trycatch e x =
+  match x with
+  | Ok _ -> x
+  | Error errs -> Error (coerce e :: errs)

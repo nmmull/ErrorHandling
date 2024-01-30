@@ -1,2 +1,3 @@
 (library
- (name ErrorHandling))
+ (name ErrorHandling)
+ (libraries prelude etude))

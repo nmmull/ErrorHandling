@@ -1,3 +1,3 @@
 type error = [
-  `NotGood of string
-]
+  | `NotGood of string
+  ]
