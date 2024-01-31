@@ -1,5 +1,7 @@
 type error = Foo_intf.error
 
+let message = Foo_intf.message
+
 let coerce e = (e : error :> Trace_intf.error)
 
 let mk_error e = Error [coerce e]

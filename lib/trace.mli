@@ -3,6 +3,10 @@ include Etude.Endofunctors_intf.MONAD
 
 open Trace_intf
 
+val message : error list -> string
+
+val print_result : (int, Trace_intf.error list) result -> unit
+
 val trycatch :
   error ->
   ('a, error list) result ->

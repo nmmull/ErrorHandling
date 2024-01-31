@@ -4,6 +4,9 @@ end
 
 include Etude.Result.Make (E)
 
+let message = Trace_intf.message
+let print_result = Trace_intf.print_result
+
 let trycatch e x =
   match x with
   | Ok _ -> x
