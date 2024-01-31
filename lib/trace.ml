@@ -1,4 +1,8 @@
-let pure x = Ok x
+module E = struct
+  type t = Trace_intf.error list
+end
+
+include Etude.Result.Make (E)
 
 let trycatch e x =
   match x with

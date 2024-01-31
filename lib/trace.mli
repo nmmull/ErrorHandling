@@ -1,7 +1,7 @@
-open Trace_intf
+include Etude.Endofunctors_intf.MONAD
+        with type 'a t := ('a, Trace_intf.error list) result
 
-val pure :
-  'a -> ('a, error list) result
+open Trace_intf
 
 val trycatch :
   error ->

@@ -1,8 +1,10 @@
 type error = Foo_intf.error
 
+let coerce e = (e : error :> Trace_intf.error)
+
+let mk_error e = Error [coerce e]
+
 let is_two_or_error x =
   if x = 2
   then Trace.pure x
-  else let err = (`NotGood "Not given 2"
-                  : error :> Trace_intf.error)
-       in Error [err]
+  else mk_error (`NotGood "Not given 2")
