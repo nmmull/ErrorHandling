@@ -1,12 +1,9 @@
-type error = [
-  | Bar_intf.error
-  | Foo_intf.error
-  ]
+open Trace_intf
 
 val pure :
-  'a -> ('a, [> error ] list) result
+  'a -> ('a, error list) result
 
 val trycatch :
   error ->
-  ('a, ([> error ] as 'b) list) result ->
-  ('a, 'b list) result
+  ('a, error list) result ->
+  ('a, error list) result
