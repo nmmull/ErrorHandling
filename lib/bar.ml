@@ -8,5 +8,5 @@ let trycatch e x =
      in Error (coerced :: errs)
 
 let is_two_or_error x =
-  let err = `BadBad "bad" in
+  let err = `BadBad "Foo function failed" in
   trycatch err (Foo.is_two_or_error x)
