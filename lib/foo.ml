@@ -1,8 +1,8 @@
 type error = Foo_intf.error
 
-let coerce e = (e : error :> Trace_intf.error)
-
-let mk_error e = Error [coerce e]
+let mk_error e =
+  let coerced = (e : error :> Trace_intf.error)
+  in Error [coerced]
 
 let is_two_or_error x =
   if x = 2

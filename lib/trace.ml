@@ -1,10 +1,7 @@
+type error = Trace_intf.error
+
 module E = struct
-  type t = Trace_intf.error list
+  type t = error list
 end
 
 include Etude.Result.Make (E)
-
-let trycatch e x =
-  match x with
-  | Ok _ -> x
-  | Error errs -> Error (e :: errs)

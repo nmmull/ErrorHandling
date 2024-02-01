@@ -1,9 +1,5 @@
+type error = Trace_intf.error
+
 include Etude.Endofunctors_intf.MONAD
-        with type 'a t := ('a, Trace_intf.error list) result
+        with type 'a t := ('a, error list) result
 
-open Trace_intf
-
-val trycatch :
-  error ->
-  ('a, error list) result ->
-  ('a, error list) result
