@@ -1,47 +1,42 @@
-type error = Trace_intf.error
-
-module E = struct type t = error list end
-
-include Etude.Result.Make (E)
-
 module type ERROR = sig
-  type t
-  val coerce : t -> error
+  type error
+  val plunk : error ->
+              'a option * Trace_intf.error list ->
+              error option * Trace_intf.error list
 end
 
+type error = Trace_intf.error
+
 module Make (Err : ERROR) = struct
-  type ('a, 'error) t = ('a, 'error * error list) result
+  type ('a, 'error) t = ('a, 'error option * error list) result
 
   module ErrList = struct
-    type t = Err.t * error list
+    type t = Err.error option * error list
   end
 
   module R = Etude.Result.Make (ErrList)
 
-  (* let to_list (e_head, e_tail) = *)
-  (*   Err.coerce e_head :: e_tail *)
-
   let export = function
     | Ok o -> Ok o
     | Error (_,lst) -> Error lst
+  
+  let new_error e =
+    Error (Err.plunk e (None, []))
 
-  let new_error e = Error (e, [Err.coerce e])
-
-  let pure x = Ok x
-
-  let trycatch
-    : Err.t -> ('a, Err.t) t -> ('a, Err.t) t
-    = fun e x ->
+  let polymorphify (_, lst) = None, lst
+  
+  let pure = R.pure
+  
+  let trycatch 
+      : Err.error -> ('a, 'b) t -> ('a, Err.error) t
+    =
+    fun new_err x ->
+    (* new_err x *)
+    (* = *)
     match x with
     | Ok _ -> x
-    | Error (_, lst) ->
-       Error (e, Err.coerce e :: lst)
-end
+    | Error errs ->
+       let poly = polymorphify errs in
+       Error (Err.plunk new_err poly)
 
-(* let trycatch 
- *   = fun e x ->
- *   match x with
- *   | Ok _ -> x
- *   | Error (_, errs) ->
- *      let coerced = (e : 'error :> error)
- *      in Error (e, coerced :: errs) *)
+end
