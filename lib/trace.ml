@@ -7,7 +7,6 @@ end
 
 module Make (C : COERCE)
   = struct
-
   module ErrList = struct
     type t = C.error * Trace_intf.global_error list
   end
@@ -27,5 +26,4 @@ module Make (C : COERCE)
     | Ok o -> Ok o
     | Error (_, errs) ->
          Error (new_err, C.coerce new_err :: errs)
-
 end
