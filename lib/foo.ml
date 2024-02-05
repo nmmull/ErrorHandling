@@ -12,9 +12,9 @@ end
    *     (old_hd : error :> Trace_intf.error)
    *   in (new_hd, coerced :: lst) *)
 
-module R = Trace.Make (E)
-
-let is_two_or_error x =
-  if x = 2
-  then R.pure x
-  else R.new_error (`NotGood "Not given 2")
+(* module R = Trace.Make (E)
+ * 
+ * let is_two_or_error x =
+ *   if x = 2
+ *   then R.pure x
+ *   else R.new_error (`NotGood "Not given 2") *)

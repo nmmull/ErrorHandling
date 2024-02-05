@@ -7,10 +7,10 @@ module E = struct
        in Some narrow_error, coerced :: lst
 end
 
-module R = Trace.Make (E)
-
-
-let is_two_or_error x =
-  R.trycatch
-    (`BadBad "Foo function failed")
-    (Foo.is_two_or_error x)
+(* module R = Trace.Make (E)
+ * 
+ * 
+ * let is_two_or_error x =
+ *   R.trycatch
+ *     (`BadBad "Foo function failed")
+ *     (Foo.is_two_or_error x) *)
