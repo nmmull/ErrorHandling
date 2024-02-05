@@ -1,12 +1,29 @@
 type error = Trace_intf.error
 
-module E = struct
-  type t = error list
-end
+module E = struct type t = error list end
 
 include Etude.Result.Make (E)
 
-type ('a, +'error) t = ('a, 'error * error list) result
+module type ERROR = sig
+  type t
+  val coerce : t -> error
+end
+
+module Make (Err : ERROR) = struct
+  type ('a, 'error) t = ('a, 'error * error list) result
+
+  module ErrList = struct
+    type t = Err.t * error list
+  end
+
+  module R = Etude.Result.Make (ErrList)
+
+  let to_list (e_head, e_tail) =
+    Err.coerce e_head :: e_tail
+
+
+
+end
 
 (* let trycatch 
  *   = fun e x ->
