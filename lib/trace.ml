@@ -1,3 +1,5 @@
+type ('a, 'e) trace = ('a, 'e * Trace_intf.error list) result
+
 module type COERCE = sig
   type error
   val coerce : error -> Trace_intf.error
@@ -5,8 +7,6 @@ end
 
 module Make (C : COERCE)
   = struct
-
-  type ('a, 'e) trace = ('a, 'e * Trace_intf.error list) result
 
   module ErrList = struct
     type t = C.error * Trace_intf.error list

@@ -3,8 +3,8 @@ module Error = struct
   let coerce e = (e : error :> Trace_intf.error)
 end
 
-
 module R = Trace.Make (Error)
+let export = R.export
 
 let is_two_or_error x =
   if x = 2

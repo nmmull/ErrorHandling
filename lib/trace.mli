@@ -1,16 +1,10 @@
-module type COERCE = sig
-  type error
-  val coerce : error -> Trace_intf.error
-end
+type ('a, 'e) trace
 
-module Make : functor (C : COERCE) ->
+module Make : functor (C : Trace_intf.COERCE) ->
   sig
-    type ('a, 'e) trace = ('a, 'e * Trace_intf.error list) result
-    val export : ('a, 'b * 'c) result -> ('a, 'c) result
+    val export : ('a, 'b) trace ->
+                 ('a, Trace_intf.error list) result
     val pure : 'a -> ('a, C.error) trace
     val new_error : C.error -> ('a, C.error) trace
-    val trycatch :
-      C.error ->
-      ('a, 'b) trace ->
-      ('a, C.error) trace
+    val trycatch : C.error -> ('a, 'b) trace -> ('a, C.error) trace
   end
