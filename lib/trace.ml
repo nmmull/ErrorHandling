@@ -2,8 +2,7 @@ type ('a, 'e) trace = ('a, 'e * Trace_intf.error list) result
 
 module type COERCE = Trace_intf.COERCE
 
-module Make (C : COERCE)
-  = struct
+module Make (C : COERCE) = struct
 
   module ErrList = struct
     type t = C.error * Trace_intf.error list
