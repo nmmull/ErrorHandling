@@ -5,8 +5,7 @@ module type COERCE = sig
   val coerce : error -> Trace_intf.global_error
 end
 
-module Make (C : COERCE)
-  = struct
+module Make (C : COERCE) = struct
   module ErrList = struct
     type t = C.error * Trace_intf.global_error list
   end
