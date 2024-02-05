@@ -29,7 +29,9 @@ module Make (Err : ERROR) = struct
 
   let pure x = Ok x
 
-  let trycatch e x =
+  let trycatch
+    : Err.t -> ('a, Err.t) t -> ('a, Err.t) t
+    = fun e x ->
     match x with
     | Ok _ -> x
     | Error (_, lst) ->
