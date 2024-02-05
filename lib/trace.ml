@@ -1,20 +1,20 @@
-type ('a, 'e) trace = ('a, 'e * Trace_intf.error list) result
+type ('a, 'e) trace = ('a, 'e) Trace_intf.trace
 
 module type COERCE = sig
   type error
-  val coerce : error -> Trace_intf.error
+  val coerce : error -> Trace_intf.global_error
 end
 
 module Make (C : COERCE)
   = struct
 
   module ErrList = struct
-    type t = C.error * Trace_intf.error list
+    type t = C.error * Trace_intf.global_error list
   end
 
   module R = Etude.Result.Make (ErrList)
 
-  let export = function
+  let expose = function
     | Ok o -> Ok o
     | Error (_,lst) -> Error lst
     

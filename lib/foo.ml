@@ -1,10 +1,10 @@
 module Error = struct
   type error = Foo_intf.error
-  let coerce e = (e : error :> Trace_intf.error)
+  let coerce e = (e : error :> Trace_intf.global_error)
 end
 
 module R = Trace.Make (Error)
-let export = R.export
+let expose = R.expose
 
 let is_two_or_error x =
   if x = 2
