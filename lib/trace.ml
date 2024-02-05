@@ -18,11 +18,22 @@ module Make (Err : ERROR) = struct
 
   module R = Etude.Result.Make (ErrList)
 
-  let to_list (e_head, e_tail) =
-    Err.coerce e_head :: e_tail
+  (* let to_list (e_head, e_tail) = *)
+  (*   Err.coerce e_head :: e_tail *)
 
+  let export = function
+    | Ok o -> Ok o
+    | Error (_,lst) -> Error lst
 
+  let new_error e = Error (e, [Err.coerce e])
 
+  let pure x = Ok x
+
+  let trycatch e x =
+    match x with
+    | Ok _ -> x
+    | Error (_, lst) ->
+       Error (e, Err.coerce e :: lst)
 end
 
 (* let trycatch 
