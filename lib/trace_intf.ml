@@ -8,4 +8,5 @@ module type COERCE = sig
   val coerce : error -> global_error
 end
 
-type error = global_error
+type 'e errlist = 'e * global_error list
+type ('a, 'e) trace = ('a, 'e errlist) result

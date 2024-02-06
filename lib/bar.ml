@@ -1,6 +1,6 @@
 module Error = struct
   type error = Bar_intf.error
-  let coerce e = (e : error :> Trace_intf.error)
+  let coerce e = (e : error :> Trace_intf.global_error)
 end
 
 module R = Trace.Make (Error)

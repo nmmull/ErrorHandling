@@ -1,7 +1,5 @@
-type 'e errlist = 'e * Trace_intf.error list
+type 'a errlist = 'a Trace_intf.errlist
 type ('a, 'e) trace = ('a, 'e errlist) result
-
-(* type ('e, 'c) elist = ('e, 'c list) result *)
 
 module type COERCE = Trace_intf.COERCE
 
