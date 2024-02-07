@@ -3,10 +3,22 @@ type global_error = [
   | Foo_intf.error
   ]
 
+module Errlist = struct
+  type t = global_error list
+end
+
+type errlist = Errlist.t
+
 module type COERCE = sig
   type error
   val coerce : error -> global_error
 end
 
-type 'e errlist = 'e * global_error list
-type ('a, 'e) trace = ('a, 'e errlist) result
+module type TRACE = sig
+  type error
+  val new_error : error -> ('a, errlist) result
+  val trycatch : error ->
+                 ('a, errlist) result ->
+                 ('a, errlist) result
+end
+

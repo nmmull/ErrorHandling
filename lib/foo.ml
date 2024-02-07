@@ -3,10 +3,8 @@ module Error = struct
   let coerce e = (e : error :> Trace_intf.global_error)
 end
 
-module R = Trace.Make (Error)
-let export = R.export
-
 let is_two_or_error x =
+  let open Trace.Make (Error) in
   if x = 2
-  then R.pure 2
-  else R.new_error (`NotGood "Not given 2")
+  then Ok 2
+  else new_error (`NotGood "Not given 2")
