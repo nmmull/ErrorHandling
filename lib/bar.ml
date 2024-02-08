@@ -1,9 +1,4 @@
-module Error = struct
-  type error = Bar_intf.error
-  (* let coerce e = (e : error :> Trace_intf.global_error) *)
-end
-
-module T = Trace.Make (Error)
+module T = Trace.Make (Bar_intf)
 
 let is_two_or_error x =
   let open T in

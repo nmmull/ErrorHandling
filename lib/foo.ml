@@ -1,9 +1,4 @@
-module Error = struct
-  type error = Foo_intf.error
-  (* let coerce e = (e : error :> Trace_intf.global_error) *)
-end
-
-module T = Trace.Make (Error)
+module T = Trace.Make (Foo_intf)
 module R = Etude.Result.Make (Trace.Errlist)
 
 let is_two_or_error x =

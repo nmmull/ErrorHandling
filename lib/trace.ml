@@ -1,8 +1,13 @@
 module Errlist = Trace_intf.Errlist
 
+module type TRACE = sig
+  type 'a trace
+  val new_error : [< Trace_intf.global_error ] -> ('a, Errlist.t) result
+  val trycatch : [< Trace_intf.global_error ] -> ('a, Errlist.t) result -> ('a, Errlist.t) result
+end
+
 module Make (C : Trace_intf.COERCE) =
   struct
-    (* type error = C.error *)
     type 'a trace = ('a, Trace_intf.Errlist.t) result
     let new_error e = Error [(e : [< Trace_intf.global_error ] :> Trace_intf.global_error)]
     let trycatch e = function
