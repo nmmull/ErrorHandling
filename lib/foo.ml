@@ -3,7 +3,7 @@ module type HIDDEN = sig
                   ('a, Trace.Errlist.t) result
 end
 
-module T : HIDDEN = Trace.Hide
+module T : HIDDEN = Trace.T
 module R = Etude.Result.Make (Trace.Errlist)
 
 let is_two_or_error x =

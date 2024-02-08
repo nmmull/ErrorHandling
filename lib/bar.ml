@@ -4,7 +4,7 @@ module type HIDDEN = sig
                  ('a, Trace.Errlist.t) result
 end
 
-module T : HIDDEN = Trace.Hide
+module T : HIDDEN = Trace.T
 
 let is_two_or_error x =
   let open T in

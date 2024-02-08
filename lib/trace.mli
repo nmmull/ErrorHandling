@@ -2,7 +2,7 @@ module Errlist : sig type t end
 
 module type TRACE = Trace_intf.TRACE
 
-module Hide : TRACE
+module T : TRACE
        with type 'a trace = ('a, Errlist.t) result
 
 val export : ('a, Errlist.t) result ->
