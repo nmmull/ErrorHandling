@@ -2,13 +2,16 @@ module Errlist = Trace_intf.Errlist
 
 module type TRACE = Trace_intf.TRACE
 
-module Make : TRACE with type 'a trace = ('a, Errlist.t) result =
+module Hide =
   struct
     type 'a trace = ('a, Trace_intf.Errlist.t) result
-    let new_error e = Error [(e : [< Trace_intf.global_error ] :> Trace_intf.global_error)]
+    let coerce e = (e : [< Trace_intf.global_error ]
+                        :> Trace_intf.global_error)
+    let new_error e =
+      Error [coerce e]
     let trycatch e = function
       | Ok _ as o -> o
-      | Error lst -> Error ((e : [< Trace_intf.global_error ] :> Trace_intf.global_error) :: lst)
+      | Error lst -> Error (coerce e :: lst)
   end
 
 let export = Fun.id

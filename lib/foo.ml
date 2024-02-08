@@ -1,9 +1,9 @@
-module type LOCKED = sig
+module type HIDDEN = sig
   val new_error : Foo_intf.error ->
                   ('a, Trace.Errlist.t) result
 end
 
-module T : LOCKED = Trace.Make
+module T : HIDDEN = Trace.Hide
 module R = Etude.Result.Make (Trace.Errlist)
 
 let is_two_or_error x =

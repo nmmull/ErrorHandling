@@ -1,10 +1,10 @@
-module type LOCKED = sig
+module type HIDDEN = sig
   val trycatch : Bar_intf.error ->
                  ('a, Trace.Errlist.t) result ->
                  ('a, Trace.Errlist.t) result
 end
 
-module T : LOCKED = Trace.Make
+module T : HIDDEN = Trace.Hide
 
 let is_two_or_error x =
   let open T in
