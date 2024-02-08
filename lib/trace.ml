@@ -1,11 +1,5 @@
 module Errlist = Trace_intf.Errlist
 
-(* module type TRACE = sig
- *   type 'a trace
- *   val new_error : [< Trace_intf.global_error ] -> 'a trace
- *   val trycatch : [< Trace_intf.global_error ] -> 'a trace -> 'a trace
- * end *)
-
 module type TRACE = Trace_intf.TRACE
 
 module Make (C : Trace_intf.COERCE) =
