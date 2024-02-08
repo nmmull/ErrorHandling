@@ -4,7 +4,7 @@ module type LOCKED = sig
                  ('a, Trace.Errlist.t) result
 end
 
-module T : LOCKED = Trace.Make (Bar_intf)
+module T : LOCKED = Trace.Make
 
 let is_two_or_error x =
   let open T in

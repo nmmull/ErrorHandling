@@ -3,7 +3,7 @@ module type LOCKED = sig
                   ('a, Trace.Errlist.t) result
 end
 
-module T : LOCKED = Trace.Make (Foo_intf)
+module T : LOCKED = Trace.Make
 module R = Etude.Result.Make (Trace.Errlist)
 
 let is_two_or_error x =
