@@ -14,4 +14,12 @@ module T =
       | Error lst -> Error (coerce e :: lst)
   end
 
+module Specialize (E : sig type error end) = struct
+  type 'a trycatch = E.error ->
+                     ('a, Errlist.t) result ->
+                     ('a, Errlist.t) result
+  type 'a new_error = E.error ->
+                      ('a, Errlist.t) result
+  end
+
 let export = Fun.id

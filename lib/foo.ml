@@ -1,14 +1,9 @@
-module type HIDDEN = sig
-  val new_error : Foo_intf.error ->
-                  ('a, Trace.Errlist.t) result
-end
+type 'a new_error = 'a Trace.Specialize(Foo_intf).new_error
 
-module T : HIDDEN = Trace.T
-module R = Etude.Result.Make (Trace.Errlist)
+let new_error : 'a new_error = Trace.T.new_error
 
 let is_two_or_error x =
-  let open T in
-  let open R in
+  let open Etude.Result.Make (Trace.Errlist) in
   if x = 2
   then pure 2
   else new_error (`NotGood "Not given 2")

@@ -1,10 +1,4 @@
-module type ERR = sig type error end
-
-module Specialize (E : ERR) = struct
-  type 'a trycatch = E.error -> ('a, Trace.Errlist.t) result -> ('a, Trace.Errlist.t) result
-  end
-
-type 'a trycatch = 'a Specialize(Bar_intf).trycatch
+type 'a trycatch = 'a Trace.Specialize(Bar_intf).trycatch
 
 let trycatch : 'a trycatch = Trace.T.trycatch
 
